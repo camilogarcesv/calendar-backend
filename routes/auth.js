@@ -4,17 +4,41 @@
 */
 
 const { Router } = require("express");
+const { check } = require("express-validator");
+const router = Router();
+const { fieldValidator } = require("../middlewares/fields-validators");
 const {
   createUser,
-  login,
   loginUser,
   tokenRevalidation,
 } = require("../controllers/auth");
-const router = Router();
 
-router.post("/new", createUser);
+router.post(
+  "/new",
+  [
+    // middlewares
+    check("name", "Name is required").not().isEmpty(),
+    check("email", "Email is required").isEmail(),
+    check("password", "Password should be greater than 6 characters").isLength({
+      min: 6,
+    }),
+    fieldValidator,
+  ],
+  createUser
+);
 
-router.post("/", loginUser);
+router.post(
+  "/",
+  [
+    // middlewares
+    check("email", "Email is required").isEmail(),
+    check("password", "Password should be greater than 6 characters").isLength({
+      min: 6,
+    }),
+    fieldValidator,
+  ],
+  loginUser
+);
 
 router.get("/renew", tokenRevalidation);
 
