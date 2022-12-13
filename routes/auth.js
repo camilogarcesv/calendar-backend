@@ -12,6 +12,7 @@ const {
   loginUser,
   tokenRevalidation,
 } = require("../controllers/auth");
+const { jwtValidator } = require("../middlewares/jwt-validator");
 
 router.post(
   "/new",
@@ -40,6 +41,6 @@ router.post(
   loginUser
 );
 
-router.get("/renew", tokenRevalidation);
+router.get("/renew", jwtValidator, tokenRevalidation);
 
 module.exports = router;
