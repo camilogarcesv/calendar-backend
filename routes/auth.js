@@ -1,5 +1,5 @@
 /* 
-  Rutas de Usuarios / Auth
+  User's Routes / Auth
   host + /api/auth
 */
 
