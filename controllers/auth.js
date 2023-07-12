@@ -10,7 +10,7 @@ const createUser = async (req, res = response) => {
     if (user) {
       return res.status(400).json({
         ok: false,
-        msg: "User does not exist with this email",
+        msg: "The user already exists",
       });
     }
     user = new User(req.body);
@@ -87,6 +87,8 @@ const tokenRevalidation = async (req, res = response) => {
 
   res.json({
     ok: true,
+    uid,
+    name,
     token,
   });
 };
